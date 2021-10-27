@@ -1,25 +1,21 @@
+using Catalog.API.Data;
+using Catalog.API.Repositories;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using Microsoft.OpenApi.Models;
 
 namespace Catalog.API
 {
     public static class ServiceCollectionExtensions
     {
-        public static IServiceCollection ConfigureServices(this IServiceCollection services, ConfigurationManager configurationManager)
+        public static IServiceCollection AddMongoContexts(this IServiceCollection services, ConfigurationManager configuration)
         {
-            services.AddControllers();
-            services.AddSwaggerGen(c =>
-                c.SwaggerDoc(
-                    "v1", 
-                    new OpenApiInfo
-                    {
-                        Title = "Catalog.API", 
-                        Version = "v1"
-                    })
-                );
-
-            return services;
+            var mongoDbConfigurationSection = configuration.GetSection(nameof(MongoDbConfiguration));
+            return services
+                .Configure<MongoDbConfiguration>(mongoDbConfigurationSection)
+                .AddScoped<ICatalogContext, CatalogContext>();
         }
+
+        public static IServiceCollection AddRepositories(this IServiceCollection services) =>
+            services.AddScoped<IProductRepository, ProductRepository>();
     }
 }
