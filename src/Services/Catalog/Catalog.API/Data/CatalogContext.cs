@@ -14,6 +14,6 @@ namespace Catalog.API.Data
             Products = database.GetCollection<Product>(configuration.CollectionName);
         }
 
-        public IMongoCollection<Product> Products { get; private set; }
+        public IMongoCollection<Product> Products { get; }
     }
 }
