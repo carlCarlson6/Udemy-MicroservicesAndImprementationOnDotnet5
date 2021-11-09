@@ -386,3 +386,7 @@ Desktop.ini
 
 .docker
 .idea
+
+*.DS_Store
+
+TestResults/

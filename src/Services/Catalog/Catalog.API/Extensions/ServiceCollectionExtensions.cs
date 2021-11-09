@@ -2,8 +2,9 @@ using Catalog.API.Data;
 using Catalog.API.Repositories;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.OpenApi.Models;
 
-namespace Catalog.API
+namespace Catalog.API.Extensions
 {
     public static class ServiceCollectionExtensions
     {
@@ -17,5 +18,10 @@ namespace Catalog.API
 
         public static IServiceCollection AddRepositories(this IServiceCollection services) =>
             services.AddScoped<IProductRepository, ProductRepository>();
+
+        public static IServiceCollection AddApiDocumentation(this IServiceCollection services) =>
+            services.AddSwaggerGen(c =>
+                c.SwaggerDoc(
+                    "v1", new OpenApiInfo { Title = "Catalog.API", Version = "v1" }));
     }
 }

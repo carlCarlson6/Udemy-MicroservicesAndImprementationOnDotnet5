@@ -1,4 +1,4 @@
-namespace Catalog.API.Controllers
+namespace Catalog.API
 {
     public static class ApiRoutes
     {

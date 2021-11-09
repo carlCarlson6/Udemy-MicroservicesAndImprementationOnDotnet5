@@ -1,3 +1,4 @@
+using Catalog.API.Extensions;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -12,9 +13,7 @@ namespace Catalog.API
             services
                 .AddMongoContexts(configuration)
                 .AddRepositories()
-                .AddSwaggerGen(c =>
-                    c.SwaggerDoc(
-                        "v1", new OpenApiInfo { Title = "Catalog.API", Version = "v1" }))
+                .AddApiDocumentation()
                 .AddControllers();
 
         public static void ConfigureWebApp(WebApplication webApp)

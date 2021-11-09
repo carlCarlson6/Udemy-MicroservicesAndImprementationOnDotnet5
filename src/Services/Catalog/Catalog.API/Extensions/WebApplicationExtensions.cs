@@ -4,7 +4,7 @@ using Microsoft.AspNetCore.Builder;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Options;
 
-namespace Catalog.API
+namespace Catalog.API.Extensions
 {
     public static class WebApplicationExtensions
     {

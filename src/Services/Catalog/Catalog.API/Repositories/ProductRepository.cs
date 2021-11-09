@@ -11,18 +11,13 @@ namespace Catalog.API.Repositories
     {
         private readonly ICatalogContext _context;
 
-        public ProductRepository(ICatalogContext catalogContext) => 
-            _context = catalogContext;
+        public ProductRepository(ICatalogContext catalogContext) => _context = catalogContext;
 
         public async Task<IEnumerable<Product>> Read() =>
-            await _context.Products
-                .Find(p => true)
-                .ToListAsync();
+            await _context.Products.Find(p => true).ToListAsync();
 
         public async Task<Product?> Read(string id) =>
-            await _context.Products
-                .Find(p => p.Id.Equals(id))
-                .FirstOrDefaultAsync();
+            await _context.Products.Find(p => p.Id.Equals(id)).FirstOrDefaultAsync();
 
         public Task<IEnumerable<Product>> ReadByName(string name)
         {
@@ -37,9 +32,7 @@ namespace Catalog.API.Repositories
         }
         
         private async Task<IEnumerable<Product>> ExecuteSearch(FilterDefinition<Product> filter) =>  
-            await _context.Products
-                .Find(filter)
-                .ToListAsync();
+            await _context.Products.Find(filter).ToListAsync();
 
         public Task Save(Product product) => _context.Products.InsertOneAsync(product);
 
