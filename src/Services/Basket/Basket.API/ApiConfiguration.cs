@@ -6,16 +6,17 @@ using Microsoft.Extensions.Hosting;
 
 namespace Basket.API
 {
-    public static class ApiConfigurations
+    public static class ApiConfiguration
     {
-        public static void ConfigureServices(IServiceCollection services, ConfigurationManager configuration) =>
+        private static void ConfigureServices(IServiceCollection services, ConfigurationManager configuration) =>
             services
                 .AddRedis(configuration)
                 .AddRepositories()
+                .AddApplicationServices()
                 .AddApiDocumentation()
                 .AddControllers();
 
-        public static void ConfigureWebApp(WebApplication webApp)
+        private static void ConfigureWebApp(WebApplication webApp)
         {
             // Configure the HTTP request pipeline.
             if (webApp.Environment.IsDevelopment())
@@ -28,6 +29,18 @@ namespace Basket.API
                 .UseAuthorization();
             
             webApp.MapControllers();
+        }
+
+        public static void RunApi(string[] args)
+        {
+            var builder = WebApplication.CreateBuilder(args);
+
+            ConfigureServices(builder.Services, builder.Configuration);
+
+            var app = builder.Build();
+            ConfigureWebApp(app);
+
+            app.Run();
         }
     }
 }

@@ -34,7 +34,7 @@ namespace Basket.API.Controllers
         [HttpPost(ApiRoutes.WithCheckout)]
         [ProducesResponseType((int)HttpStatusCode.Accepted)]
         [ProducesResponseType((int)HttpStatusCode.BadRequest)]
-        public async Task<IActionResult> Checkout([FromBody] BasketCheckout basketCheckout)
+        public Task<IActionResult> Checkout([FromBody] BasketCheckout basketCheckout)
         {
             throw new NotImplementedException();
         }

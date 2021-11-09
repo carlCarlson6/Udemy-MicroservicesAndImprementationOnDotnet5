@@ -21,5 +21,8 @@ namespace Basket.API.Extensions
 
         public static IServiceCollection AddRepositories(this IServiceCollection services) =>
             services.AddScoped<IBasketRepository, RedisBasketRepository>();
+
+        public static IServiceCollection AddApplicationServices(this IServiceCollection services) =>
+            services;
     }
 }
