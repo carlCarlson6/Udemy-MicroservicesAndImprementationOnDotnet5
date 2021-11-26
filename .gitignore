@@ -390,3 +390,5 @@ Desktop.ini
 *.DS_Store
 
 TestResults/
+
+.vscode/

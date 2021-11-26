@@ -1,6 +1,6 @@
-using System.Threading.Tasks;
 using Catalog.Core.Application.Abstractions;
 using Catalog.Core.Application.Abstractions.Commands;
+using Catalog.Core.Exceptions;
 using Catalog.Core.ValueObjects;
 using Microsoft.Extensions.Logging;
 
@@ -18,7 +18,14 @@ namespace Catalog.Core.Application
         {
             var identifier = new Identifier(command.Id);
             
-            var product = new Product(identifier);
+            var product = new Product(
+            identifier.ToString(), 
+            command.Name,
+            command.Category,
+            command.Summary,
+            command.Description,
+            command.ImageFile,
+            command.Price);
 
             _logger.LogInformation("Adding product {@Product}", command);
             await _repository.Save(product);
@@ -29,9 +36,25 @@ namespace Catalog.Core.Application
             throw new System.NotImplementedException();
         }
 
-        public Task Handle(DeleteProductCommand command)
+        // TODO - add logs
+        public async Task Handle(DeleteProductCommand command)
         {
-            throw new System.NotImplementedException();
+            var identifier = new Identifier(command.Id);
+
+            var productToDelete = await _repository.Read(identifier);
+            if (productToDelete is null)
+            {
+                throw new ProductNotFoundException();
+            }
+
+            _logger.LogInformation("Deleting product with id {Id}",productToDelete.Id);
+            
+            var result = await _repository.Delete(productToDelete);
+            if (!result)
+            {
+                // TODO - throw domain exception
+                throw new Exception();
+            }
         }
     }
 }

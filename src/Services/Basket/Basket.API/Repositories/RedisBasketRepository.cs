@@ -22,7 +22,7 @@ namespace Basket.API.Repositories
         public async Task<ShoppingCart> UpsertBasket(ShoppingCart basket)
         {
             await _redis.SetStringAsync(basket.UserName, JsonSerializer.Serialize(basket));
-            var savedBasket = ReadBasket(basket.UserName);
+            var savedBasket = await ReadBasket(basket.UserName);
             if (savedBasket is null)
             {
                 throw new Exception();

@@ -2,6 +2,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text.Json;
 using Basket.API.Entities;
+using Basket.API.Extensions;
 
 namespace Basket.API.Repositories.Models
 {
@@ -22,7 +23,9 @@ namespace Basket.API.Repositories.Models
                         item.ProductName)));
         
         public static ShoppingCartModel? Deserialize(string stringModel) => 
-            JsonSerializer.Deserialize<ShoppingCartModel>(stringModel);
+            !stringModel.IsNullEmptyOrWhitespace() ? 
+                JsonSerializer.Deserialize<ShoppingCartModel>(stringModel) :
+                null;
 
         public static ShoppingCartModel FromEntity(ShoppingCart shoppingCart) =>
             new()

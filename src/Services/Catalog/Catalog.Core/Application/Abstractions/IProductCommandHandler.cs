@@ -1,9 +1,12 @@
 using System.Threading.Tasks;
+using Catalog.Core.Application.Abstractions.Commands;
 
 namespace Catalog.Core.Application.Abstractions
 {
-    public interface IProductCreator
+    public interface IProductCommandHandler
     {
-        Task Create(CreateProductCommand command);
+        Task Handle(CreateProductCommand command);
+        Task Handle(UpdateProductCommand command);
+        Task Handle(DeleteProductCommand command);
     }
 }

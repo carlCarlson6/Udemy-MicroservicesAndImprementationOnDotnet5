@@ -1,5 +1,8 @@
-using Catalog.API.Data;
-using Catalog.API.Repositories;
+using Catalog.Core;
+using Catalog.Core.Application;
+using Catalog.Core.Application.Abstractions;
+using Catalog.MongoDb;
+using Catalog.MongoDb.Repositories;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.OpenApi.Models;
@@ -16,12 +19,15 @@ namespace Catalog.API.Extensions
                 .AddScoped<ICatalogContext, CatalogContext>();
         }
 
-        public static IServiceCollection AddRepositories(this IServiceCollection services) =>
-            services.AddScoped<IProductRepository, ProductRepository>();
+        public static IServiceCollection AddApplicationServices(this IServiceCollection services) =>
+            services.AddScoped<IProductCommandHandler, ProductCommandHandler>();
 
+        public static IServiceCollection AddRepositories(this IServiceCollection services) => 
+            services.AddScoped<IProductRepository, MongoProductRepository>();
+            
         public static IServiceCollection AddApiDocumentation(this IServiceCollection services) =>
-            services.AddSwaggerGen(c =>
-                c.SwaggerDoc(
-                    "v1", new OpenApiInfo { Title = "Catalog.API", Version = "v1" }));
+        services.AddSwaggerGen(c =>
+            c.SwaggerDoc(
+                "v1", new OpenApiInfo { Title = "Catalog.API", Version = "v1" }));
     }
 }

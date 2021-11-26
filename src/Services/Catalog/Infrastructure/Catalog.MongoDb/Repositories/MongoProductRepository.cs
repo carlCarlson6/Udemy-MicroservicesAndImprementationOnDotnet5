@@ -1,12 +1,12 @@
 using System;
 using System.Collections.Generic;
+using System.Linq.Expressions;
 using System.Threading.Tasks;
-using Catalog.API.Data;
 using Catalog.Core;
+using Catalog.Core.ValueObjects;
 using MongoDB.Driver;
-using Product = Catalog.Core.Product;
 
-namespace Catalog.API.Repositories
+namespace Catalog.MongoDb.Repositories
 {
     public class MongoProductRepository : IProductRepository
     {
@@ -14,39 +14,23 @@ namespace Catalog.API.Repositories
 
         public MongoProductRepository(ICatalogContext catalogContext) => _context = catalogContext;
 
-        public async Task<IEnumerable<Product>> Read()
+        public Task<IEnumerable<Product>> Read() => ExecuteSearch(p => true); 
+        
+        public async Task<Product?> Read(Identifier id)
         {
-            // await _context.Products.Find(p => true).ToListAsync();
+            await _context.Products.Find(p => p.Id.Equals(id)).FirstOrDefaultAsync();
             throw new NotImplementedException();
         }
 
-
-        public async Task<Product?> Read(string id)
+        public Task<IEnumerable<Product>> Read(Specification<Product> specification) =>
+            ExecuteSearch(specification.ToExpression());
+        
+        private async Task<IEnumerable<Product>> ExecuteSearch(Expression<Func<Product, bool>> filter)
         {
-            //await _context.Products.Find(p => p.Id.Equals(id)).FirstOrDefaultAsync();
-            throw new NotImplementedException();
+            var products = await _context.Products.Find(filter).ToListAsync();
+            return products ?? new List<Product>();
         }
-
-        public Task<IEnumerable<Product>> ReadByName(string name)
-        {
-            //var nameFilter = Builders<Product>.Filter.ElemMatch(p => p.Name, name);
-            //return ExecuteSearch(nameFilter);
-            throw new NotImplementedException();
-        }
-
-        public Task<IEnumerable<Product>> ReadByCategory(string categoryName)
-        {
-            //var categoryFilter = Builders<Product>.Filter.Eq(p => p.Category, categoryName); 
-            //return ExecuteSearch(categoryFilter);
-            throw new NotImplementedException();
-        }
-
-        private async Task<IEnumerable<Product>> ExecuteSearch(FilterDefinition<Product> filter)
-        {
-            //await _context.Products.Find(filter).ToListAsync();
-            throw new NotImplementedException();
-        }
-
+        
         public Task Save(Product product)
         {
             //_context.Products.InsertOneAsync(product);
@@ -60,8 +44,9 @@ namespace Catalog.API.Repositories
             throw new NotImplementedException();
         }
 
-        public async Task<bool> Delete(string id)
+        public async Task<bool> Delete(Product product)
         {
+            var id = product.Id.ToString();
             var deleteResult = await _context.Products.DeleteManyAsync(p => p.Id.Equals(id));
             return deleteResult.IsAcknowledged && deleteResult.DeletedCount > 0;
         }

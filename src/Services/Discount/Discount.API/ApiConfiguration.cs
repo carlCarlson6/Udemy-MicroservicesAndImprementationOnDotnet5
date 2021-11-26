@@ -1,16 +1,15 @@
-using Catalog.API.Extensions;
+using Discount.API.Extensions;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 
-namespace Catalog.API
+namespace Discount.API
 {
     public static class ApiConfiguration
     {
         public static void ConfigureServices(IServiceCollection services, ConfigurationManager configuration) =>
             services
-                .AddMongoContexts(configuration)
                 .AddRepositories()
                 .AddApiDocumentation()
                 .AddControllers();
@@ -21,7 +20,6 @@ namespace Catalog.API
             if (webApp.Environment.IsDevelopment())
             {
                 webApp.ConfigureDevelopmentApp();
-                webApp.SeedData();
             }   
 
             webApp

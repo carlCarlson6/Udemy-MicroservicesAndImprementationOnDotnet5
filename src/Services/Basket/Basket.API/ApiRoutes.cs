@@ -4,7 +4,7 @@ namespace Basket.API
     {
         public const string BaseBasketRouteV1 = "api/v1/basket";
 
-        public const string WithUserName = "{userName:string}";
+        public const string WithUserName = "{userName}";
         public const string WithCheckout = "Checkout";
     }
 }

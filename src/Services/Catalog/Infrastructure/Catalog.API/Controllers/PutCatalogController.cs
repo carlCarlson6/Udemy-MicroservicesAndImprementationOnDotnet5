@@ -1,7 +1,6 @@
 using System.Net;
 using System.Threading.Tasks;
-using Catalog.API.Entities;
-using Catalog.API.Repositories;
+using Catalog.Core;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 

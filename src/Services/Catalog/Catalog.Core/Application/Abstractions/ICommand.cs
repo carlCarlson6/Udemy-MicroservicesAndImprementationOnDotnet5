@@ -1,7 +1,4 @@
 namespace Catalog.Core.Application.Abstractions
 {
-    public class ICommand
-    {
-        
-    }
+    public interface ICommand { }
 }

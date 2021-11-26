@@ -1,6 +1,4 @@
-using Catalog.Core.Application.Abstractions;
-
-namespace Catalog.Core.Application.Queries
+namespace Catalog.Core.Application.Abstractions.Queries
 {
     public class QueryProductById : IQuery<Product>
     {

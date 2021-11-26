@@ -31,9 +31,9 @@ namespace Basket.API
             webApp.MapControllers();
         }
 
-        public static void RunApi(string[] args)
+        public static void RunApi(string[] arguments)
         {
-            var builder = WebApplication.CreateBuilder(args);
+            var builder = WebApplication.CreateBuilder(arguments);
 
             ConfigureServices(builder.Services, builder.Configuration);
 

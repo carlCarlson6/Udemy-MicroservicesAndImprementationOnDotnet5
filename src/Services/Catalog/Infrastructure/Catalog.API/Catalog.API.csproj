@@ -11,4 +11,9 @@
         <PackageReference Include="Swashbuckle.AspNetCore" Version="6.1.5" />
     </ItemGroup>
 
+    <ItemGroup>
+      <ProjectReference Include="..\..\Catalog.Core\Catalog.Core.csproj" />
+      <ProjectReference Include="..\Catalog.MongoDb\Catalog.MongoDb.csproj" />
+    </ItemGroup>
+
 </Project>

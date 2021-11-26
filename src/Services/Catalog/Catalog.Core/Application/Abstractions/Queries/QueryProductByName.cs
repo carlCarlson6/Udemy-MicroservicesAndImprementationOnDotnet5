@@ -1,7 +1,6 @@
 using System.Collections.Generic;
-using Catalog.Core.Application.Abstractions;
 
-namespace Catalog.Core.Application.Queries
+namespace Catalog.Core.Application.Abstractions.Queries
 {
     public class QueryProductByName : IQuery<IEnumerable<Product>>
     {

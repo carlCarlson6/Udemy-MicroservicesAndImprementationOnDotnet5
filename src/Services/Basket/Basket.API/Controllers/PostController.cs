@@ -1,6 +1,7 @@
 using System;
 using System.Net;
 using System.Threading.Tasks;
+using Basket.API.Controllers.Models;
 using Basket.API.Entities;
 using Basket.API.Repositories;
 using Microsoft.AspNetCore.Mvc;
@@ -20,10 +21,11 @@ namespace Basket.API.Controllers
         
         [HttpPost]
         [ProducesResponseType(typeof(ShoppingCart), (int)HttpStatusCode.OK)]
-        public async Task<ActionResult<ShoppingCart>> PutBasket([FromBody] ShoppingCart cart)
+        public async Task<ActionResult<ShoppingCart>> UpdateBasket([FromBody] UpdateBasketRequest updateBasketRequest)
         {
-            var savedCart = await _repository.UpsertBasket(cart);
-            return Ok(savedCart);
+            var basket = updateBasketRequest.ToEntity();
+            var savedBasket = await _repository.UpsertBasket(basket);
+            return Ok(savedBasket);
         }
 
         // TODO

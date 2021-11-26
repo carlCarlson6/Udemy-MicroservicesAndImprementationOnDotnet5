@@ -8,14 +8,15 @@ namespace Catalog.API
 {
     public static class ApiConfiguration
     {
-        public static void ConfigureServices(IServiceCollection services, ConfigurationManager configuration) =>
+        private static void ConfigureServices(IServiceCollection services, ConfigurationManager configuration) =>
             services
                 .AddMongoContexts(configuration)
+                .AddApplicationServices()
                 .AddRepositories()
                 .AddApiDocumentation()
                 .AddControllers();
 
-        public static void ConfigureWebApp(WebApplication webApp)
+        private static void ConfigureWebApp(WebApplication webApp)
         {
             // Configure the HTTP request pipeline.
             if (webApp.Environment.IsDevelopment())
@@ -35,10 +36,10 @@ namespace Catalog.API
         {
             var builder = WebApplication.CreateBuilder(arguments);
 
-            ApiConfiguration.ConfigureServices(builder.Services, builder.Configuration);
+            ConfigureServices(builder.Services, builder.Configuration);
 
             var app = builder.Build();
-            ApiConfiguration.ConfigureWebApp(app);
+            ConfigureWebApp(app);
 
             app.Run();
         }
