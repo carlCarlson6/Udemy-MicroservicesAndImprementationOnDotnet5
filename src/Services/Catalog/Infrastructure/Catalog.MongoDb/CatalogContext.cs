@@ -11,9 +11,9 @@ namespace Catalog.API.Data
             var configuration = options.Value;
             var client = new MongoClient(configuration.ConnectionString);
             var database = client.GetDatabase(configuration.DatabaseName);
-            Products = database.GetCollection<Product>(configuration.CollectionName);
+            Products = database.GetCollection<ProductDTO>(configuration.CollectionName);
         }
 
-        public IMongoCollection<Product> Products { get; }
+        public IMongoCollection<ProductDTO> Products { get; }
     }
 }

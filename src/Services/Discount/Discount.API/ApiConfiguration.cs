@@ -3,11 +3,10 @@ using Microsoft.AspNetCore.Builder;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using Microsoft.OpenApi.Models;
 
 namespace Catalog.API
 {
-    public static class ApiConfigurations
+    public static class ApiConfiguration
     {
         public static void ConfigureServices(IServiceCollection services, ConfigurationManager configuration) =>
             services
@@ -30,6 +29,18 @@ namespace Catalog.API
                 .UseAuthorization();
             
             webApp.MapControllers();
+        }
+
+        public static void RunApi(string[] arguments)
+        {
+            var builder = WebApplication.CreateBuilder(arguments);
+
+            ApiConfiguration.ConfigureServices(builder.Services, builder.Configuration);
+
+            var app = builder.Build();
+            ApiConfiguration.ConfigureWebApp(app);
+
+            app.Run();
         }
     }
 }

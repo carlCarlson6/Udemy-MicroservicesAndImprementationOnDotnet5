@@ -6,7 +6,7 @@ namespace Catalog.API.Data
 {
     public static class CatalogContextSeed
     {
-        public static void SeedData(IMongoCollection<Product> productsCollection)
+        public static void SeedData(IMongoCollection<ProductDTO> productsCollection)
         {
             var existProduct = productsCollection.Find(p => true).Any();
             
@@ -18,8 +18,8 @@ namespace Catalog.API.Data
             
         }
 
-        private static IEnumerable<Product> GetPreconfiguredProducts() => 
-            new List<Product>()
+        private static IEnumerable<ProductDTO> GetPreconfiguredProducts() => 
+            new List<ProductDTO>()
             {
                 new()
                 {
