@@ -1,12 +1,17 @@
-using Catalog.Core.Application.Abstractions;
-using Catalog.Core.Application.Abstractions.Queries;
+using System.Collections.Generic;
+using System.Threading.Tasks;
+using Catalog.Core.Application.Queries.Abstractions;
 using Catalog.Core.Exceptions;
 using Catalog.Core.ValueObjects;
 using Microsoft.Extensions.Logging;
 
-namespace Catalog.Core.Application
+namespace Catalog.Core.Application.Queries
 {
-    public class ProductQueryHandler : IProductQueryHandler
+    public class ProductQueryHandler : 
+        IQueryHandler<QueryAllProducts, IEnumerable<Product>>,
+        IQueryHandler<QueryProductById, Product>,
+        IQueryHandler<QueryProductByCategory, IEnumerable<Product>>,
+        IQueryHandler<QueryProductByName, IEnumerable<Product>>
     {
         private readonly IProductRepository _repository;
         private readonly ILogger<ProductQueryHandler> _logger;

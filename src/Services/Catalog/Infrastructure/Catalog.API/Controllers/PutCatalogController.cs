@@ -20,6 +20,7 @@ namespace Catalog.API.Controllers
         [ProducesResponseType(typeof(Product), (int)HttpStatusCode.OK)]
         public async Task<IActionResult> UpdateProduct([FromBody] Product product)
         {
+            // TODO
             _logger.LogInformation("Updating product {@Product}", product);
             return Ok(await _repository.Update(product));
         }

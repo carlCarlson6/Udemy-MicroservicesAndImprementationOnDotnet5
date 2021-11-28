@@ -1,12 +1,16 @@
-using Catalog.Core.Application.Abstractions;
-using Catalog.Core.Application.Abstractions.Commands;
+using System;
+using System.Threading.Tasks;
+using Catalog.Core.Application.Commands.Abstractions;
 using Catalog.Core.Exceptions;
 using Catalog.Core.ValueObjects;
 using Microsoft.Extensions.Logging;
 
-namespace Catalog.Core.Application
+namespace Catalog.Core.Application.Commands
 {
-    public class ProductCommandHandler : IProductCommandHandler
+    public class ProductCommandHandler : 
+        ICommandHandler<CreateProductCommand>,
+        ICommandHandler<DeleteProductCommand>,
+        ICommandHandler<UpdateProductCommand>
     {
         private readonly IProductRepository _repository;
         private readonly ILogger<ProductCommandHandler> _logger;

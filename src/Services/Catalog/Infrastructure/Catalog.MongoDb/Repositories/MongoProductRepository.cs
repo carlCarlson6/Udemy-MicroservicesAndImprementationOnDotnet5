@@ -37,7 +37,7 @@ namespace Catalog.MongoDb.Repositories
             throw new NotImplementedException();
         }
 
-        public async Task<bool> Update(Product product)
+        public Task<bool> Update(Product product)
         {
             //var updateResult = await _context.Products.ReplaceOneAsync(p => p.Id.Equals(product.Id), product);
             //return updateResult.IsAcknowledged && updateResult.ModifiedCount > 0;

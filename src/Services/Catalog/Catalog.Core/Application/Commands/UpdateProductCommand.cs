@@ -1,6 +1,8 @@
-namespace Catalog.Core.Application.Abstractions.Commands
+using Catalog.Core.Application.Commands.Abstractions;
+
+namespace Catalog.Core.Application.Commands
 {
-    public class UpdateProductCommand
+    public class UpdateProductCommand : ICommand
     {
         public string Id { get; }
         public string Name { get; }

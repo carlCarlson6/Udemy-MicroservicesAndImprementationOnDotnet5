@@ -1,6 +1,5 @@
 using Catalog.Core;
-using Catalog.Core.Application;
-using Catalog.Core.Application.Abstractions;
+using Catalog.Core.Application.Extensions;
 using Catalog.MongoDb;
 using Catalog.MongoDb.Repositories;
 using Microsoft.Extensions.Configuration;
@@ -20,7 +19,9 @@ namespace Catalog.API.Extensions
         }
 
         public static IServiceCollection AddApplicationServices(this IServiceCollection services) =>
-            services.AddScoped<IProductCommandHandler, ProductCommandHandler>();
+            services
+                .AddQueries()
+                .AddCommands();
 
         public static IServiceCollection AddRepositories(this IServiceCollection services) => 
             services.AddScoped<IProductRepository, MongoProductRepository>();
