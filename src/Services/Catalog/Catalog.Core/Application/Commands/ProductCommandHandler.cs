@@ -23,24 +23,37 @@ namespace Catalog.Core.Application.Commands
             var identifier = new Identifier(command.Id);
             
             var product = new Product(
-            identifier.ToString(), 
-            command.Name,
-            command.Category,
-            command.Summary,
-            command.Description,
-            command.ImageFile,
-            command.Price);
+                identifier.ToString(), 
+                command.Name,
+                command.Category,
+                command.Summary,
+                command.Description,
+                command.ImageFile,
+                command.Price);
 
             _logger.LogInformation("Adding product {@Product}", command);
             await _repository.Save(product);
         }
         
-        public Task Handle(UpdateProductCommand command)
+        public async Task Handle(UpdateProductCommand command)
         {
-            throw new System.NotImplementedException();
+            var product = new Product(
+                new Identifier(command.Id).ToString(), 
+                command.Name,
+                command.Category,
+                command.Summary,
+                command.Description,
+                command.ImageFile,
+                command.Price);
+
+            var result = await _repository.Update(product);
+            if (!result)
+            {
+                // TODO - add more data to exception & log
+                throw new UpdateProductFailed();
+            }
         }
 
-        // TODO - add logs
         public async Task Handle(DeleteProductCommand command)
         {
             var identifier = new Identifier(command.Id);
@@ -56,8 +69,8 @@ namespace Catalog.Core.Application.Commands
             var result = await _repository.Delete(productToDelete);
             if (!result)
             {
-                // TODO - throw domain exception
-                throw new Exception();
+                // TODO - add more data to exception & log
+                throw new DeleteProductFailed();
             }
         }
     }
